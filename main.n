@@ -1,0 +1,11 @@
+using System;
+using CoreTweet;
+
+module Ged
+{
+    Main() : void
+    {
+        _ = Console.WriteLine(OAuth.GenerateAuthUri(Data.ConsumerKey, Data.ConsumerSecret));
+        
+    }
+}

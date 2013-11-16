@@ -1,0 +1,5 @@
+module Data
+{
+    internal ConsumerKey = "d7D9X3h2NJQxeg3q6tI3w";
+    internal ConsumerSecret = "ktjR7oirywt989iQxJoRJ2aKx3DU5V4GwVdkAGDNw";
+}
