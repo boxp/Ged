@@ -1,0 +1,19 @@
+using CoreTweet;
+
+[Record]
+class Account
+{
+    public Name : string { get; set; }
+    public AccessToken : string { get; set; }
+    public AccessSecret : string { get; set; }
+
+    public ToTokens() : Tokens
+    {
+        Tokens.Create(Data.ConsumerKey, Data.ConsumerSecret, AccessToken, AccessSecret);
+    }
+
+    public static ToAccount(tokens : Tokens) : Account
+    {
+        Account(tokens.Account.VerifyCredentials(skip_status => true).ScreenName, tokens.AccessToken, tokens.AccessTokenSecret);
+    }
+}

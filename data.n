@@ -1,5 +1,29 @@
+using System.Xml.Serialization;
+using System.IO;
+
 module Data
 {
     internal ConsumerKey = "d7D9X3h2NJQxeg3q6tI3w";
     internal ConsumerSecret = "ktjR7oirywt989iQxJoRJ2aKx3DU5V4GwVdkAGDNw";
+    public TempFile : string
+    {
+        get
+        {
+            Path.Combine(Path.GetTempPath(), "otak.ged.tmp");   
+        }
+    }
+
+    internal Serialize[T](path : string, obj : T) : void
+    {
+        def x = XmlSerializer(typeof(T));
+        using(y = File.Open(path, FileMode.OpenOrCreate, FileAccess.Write))
+            x.Serialize(y, obj);
+    }
+
+    internal Deserialize[T](path : string) : T
+    {
+        def x = XmlSerializer(typeof(T));
+        using(y = File.OpenRead(path))
+            x.Deserialize(y) :> T;
+    }
 }

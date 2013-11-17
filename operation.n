@@ -1,0 +1,32 @@
+using CoreTweet;
+using System;
+using System.IO;
+
+module Operation
+{
+    public AddAccount() : void
+    {
+        if(!File.Exists(Data.TempFile))
+        {
+            def s = OAuth.Authorize(Data.ConsumerKey, Data.ConsumerSecret);
+            Console.WriteLine(s.AuthorizeUri.ToString());
+            Data.Serialize(Data.TempFile, s);
+            Console.Error.WriteLine("Notice: temp file in " + Data.TempFile);
+        }
+        else
+        {
+            def s = Data.Deserialize(Data.TempFile);
+            File.Delete(Data.TempFile);
+            try
+            {
+                def t = OAuth.GetTokens(Console.ReadLine(), s);
+                Console.WriteLine("User " + t.Account.VerifyCredentials().ScreenName + " is authorized.");
+            }
+            catch
+            {
+                | _ is System.Net.WebException => Console.Error.WriteLine("Error: failed to authorize. please retry again.");
+                | ex => Console.WriteLine("Error: unexpected error says \n" + ex.ToString());
+            }
+        }
+    }
+}
